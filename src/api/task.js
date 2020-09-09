@@ -5,7 +5,7 @@ const task = {
         return axios.post('/task',params)
     },
     getTaskList(params){
-        return axios.get('/task/list',params)
+        return axios.get('/task/list',{params})
     },
     deleteTask(params){
         return axios.delete('/task/'+params.id)

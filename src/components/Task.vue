@@ -6,6 +6,8 @@
         :items="tableData"
         hide-default-footer>
         </v-data-table>
+        <v-pagination v-if="pageLength>0" v-model="currentPage" :length="pageLength" @input="getTaskList()" total-visible="7"></v-pagination>
+
     </div>
 </template>
 
@@ -19,6 +21,10 @@ export default {
                 {text:'备注',value:'remark'}
             ],
             tableData:[],
+            currentPage:1,
+            pageLength:0,
+            rows:''
+
         }
     },
     created(){
@@ -26,8 +32,16 @@ export default {
     },
     methods:{
         getTaskList(){
-            this.$api.task.getTaskList().then(res=>{
+
+            let params = {
+                pageNum: this.currentPage,
+                pageSize: 5
+            }
+
+            this.$api.task.getTaskList(params).then(res=>{
                 this.tableData = res.data.data.data
+                this.rows = res.data.data.recordsTotal
+                this.pageLength = Math.ceil(this.rows/5)
             })
         }
     }

@@ -6,6 +6,9 @@ const user = {
     },
     signUp(params){
         return axios.post('/user/register',params)
+    },
+    logout(params){
+        return axios.delete('/user/logout', params)
     }
 }
 
