@@ -32,6 +32,15 @@
             <v-btn color="success" small @click="editJenkins(item)">编辑</v-btn>
             <v-btn color="error" small @click="deleteJenkins(item)">删除</v-btn>
         </template>
+        <template v-slot:item.commandRunCaseType="{item}">
+            <div v-if="item.commandRunCaseType==1">文本</div>
+            <div v-if="item.commandRunCaseType==2">文件</div>
+        </template>
+        <template v-slot:item.defaultJenkinsFlag="{item}">
+            <div v-if="item.defaultJenkinsFlag==1">是</div>
+            <div v-if="item.defaultJenkinsFlag==0">否</div>
+        </template>
+
         </v-data-table>
     </div>
 </template>
@@ -43,9 +52,13 @@ export default {
             dialogTitle:'添加Jenkins',
             tableData:[],
             headers:[
+                {text:'JenkinsId',value:'id'},
                 {text:'名称',value:'name'},
                 {text:'测试命令',value:'testCommand'},
                 {text:'Jenkins地址',value:'url'},
+                {text:'测试用例类型',value:'commandRunCaseType'},
+                {text:'测试用例文件后缀',value:'commandRunCaseSuffix'},
+                {text:'是否为默认项',value:'defaultJenkinsFlag'},
                 {text:'备注',value:'remark'},
                 {text:'操作',value:'action'}
             ],
