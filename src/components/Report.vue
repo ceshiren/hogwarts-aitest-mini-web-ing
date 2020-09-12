@@ -1,7 +1,6 @@
 <template>
     <div style="margin:20px">
         <h1>报告管理</h1>
-        <v-btn color="primary" @click="drawEchart()">echart</v-btn>
         <div id="myChart" style="width:800px;height:600px"></div>
     </div>
 </template>
@@ -10,11 +9,22 @@
 export default {
     data(){
         return {
-
+            countX: [],
+            countData:[],
         }
     },
     created(){
-        this.drawEchart()
+        this.$api.report.getCaseCount().then(res=>{
+            let listData = []
+            listData = res.data.data
+
+            for(let i=0;i<listData.length;i++){
+                this.countX.push("任务id"+listData[i].id)
+                this.countData.push(listData[i].caseCount)
+            }
+            this.drawEchart()
+        })
+        
     },
     methods:{
         drawEchart(){
@@ -24,13 +34,13 @@ export default {
 
                 xAxis: {
                     type: 'category',
-                    data: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun']
+                    data: this.countX
                 },
                 yAxis: {
                     type: 'value'
                 },
                 series: [{
-                    data: [820, 932, 901, 934, 1290, 1330, 1320],
+                    data: this.countData,
                     type: 'line'
                 }]
             })

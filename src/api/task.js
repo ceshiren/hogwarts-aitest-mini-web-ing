@@ -10,6 +10,9 @@ const task = {
     deleteTask(params){
         return axios.delete('/task/'+params.id)
     },
+    doTask(params){
+        return axios.post('/task/start',params)
+    }
 }
 
 export default task;
